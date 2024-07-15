@@ -1,4 +1,5 @@
 use chrono::DateTime;
+use rayon::prelude::*;
 use std::{fmt::Display, time::SystemTime};
 
 #[allow(unused)]
@@ -33,7 +34,7 @@ fn format_time(time: SystemTime) -> String {
 }
 
 fn format_list(list: &[(f64, f64)]) -> String {
-    list.iter()
+    list.par_iter()
         .rev()
         .map(|(price, qty)| format!("{: >4.2}@{: <12.2}", price, qty))
         .collect::<Vec<_>>()

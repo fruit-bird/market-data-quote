@@ -1,5 +1,6 @@
 use crate::quote::Quote;
 use std::time::{Duration, SystemTime};
+use rayon::prelude::*;
 
 #[derive(Debug, Clone, Copy, Default)]
 pub struct Price(pub [u8; 5]);
@@ -49,7 +50,7 @@ impl QuotePacket {
 
         let start_index = data.len() - 214;
         if &data[start_index - 1..start_index + 4] != b"B6034" {
-            eprintln!("Invalid start of message, skipping");
+            // eprintln!("Invalid start of message, skipping");
             // println!("{:?}", &data[start_index - 1..start_index + 4]);
             return None;
         }
@@ -75,12 +76,12 @@ impl QuotePacket {
             .to_string();
         let bids = self
             .bids
-            .iter()
+            .par_iter()
             .map(|(price, quantity)| (price.to_f64(), quantity.to_f64()))
             .collect();
         let asks = self
             .asks
-            .iter()
+            .par_iter()
             .map(|(price, quantity)| (price.to_f64(), quantity.to_f64()))
             .collect();
 
