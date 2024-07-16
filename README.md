@@ -12,6 +12,18 @@ Output is formatted like a `.tsv`, so that it can be easily used elsewhere (spre
 parse-quote <FILE> > output.tsv
 ```
 
+## Usage
+```
+Usage: parse-quote [OPTIONS] <FILE>
+
+Arguments:
+  <FILE>  Input PCAP file
+
+Options:
+  -r, --reorder  Reorder quotes by accept time
+  -h, --help     Print help
+```
+
 ## Benchmark
 The example file contains 23498 entries
 
